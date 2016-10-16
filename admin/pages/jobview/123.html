@@ -1,0 +1,28 @@
+<form action="<?php $self ?>" form method="post">
+<?php
+
+$query = "SELECT * FROM `materials` WHERE jobid = $jobid ORDER BY materialid DESC";  
+$result = mysql_query($query) or die('Query error:'.mysql_error());   
+$num=mysql_num_rows($result);
+$change="";
+
+while($post = mysql_fetch_array($result))
+{
+  extract($post);
+
+    $page = html_entity_decode($post['materialid']);
+    $output = stripslashes($page);
+
+    if ($output != "") { 
+        echo '<textarea name="posts['.$post['materialid'].']" rows="4" cols="70">' . $output . '</textarea><div class="time"><font face="monospace">' . $post['materialname'] . '</font></div>';
+    } //creates tables for each filled entry with a name corrsponing to its auto-increment id.
+
+}
+
+?>
+
+<input name="send" type="hidden" />  
+<div class="mod">
+<p><input class="master" type="submit" value="Mod" /></p></div><!--submit button is called "Mod"-->
+
+</form>
